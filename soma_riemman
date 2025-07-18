@@ -1,0 +1,40 @@
+import math
+
+def funcao(expressao):
+    return lambda x: eval(expressao)
+
+def soma_riemann(f, a, b, n, tipo="esquerda"):
+    h = (b - a) / n
+    soma = 0
+
+    for i in range(n):
+        
+        if tipo == "esquerda":
+            xi = a + i * h    
+        elif tipo == "direita":
+            xi = a + (i + 1) * h   
+        elif tipo == "meio":
+            xi = a + (i + 0.5) * h
+            
+        else:
+            raise ValueError("Tipo inválido: escolha 'esquerda', 'direita' ou 'meio'")
+        soma += f(xi)
+
+    return soma * h
+
+expressao = input("Digite a função de interesse f(x):")
+
+f = funcao(expressao)
+a = float(input("Início do intervalo (a): "))
+b = float(input("Fim do intervalo (b): "))
+n = int(input("Número de subdivisões (n): "))
+tipo = input("Tipo de soma (esquerda, direita, meio): ").lower()
+
+resultado = soma_riemann(f, a, b, n, tipo)
+
+print("\n Resultado da Soma de Riemann ")
+print(f"Função: {expressao}")
+print(f"Intervalo: de {a} até {b}")
+print(f"Número de retângulos: {n}")
+print(f"Tipo: {tipo}")
+print("Aproximação da área:", resultado)
