@@ -1,0 +1,49 @@
+def funcao_que_deseja_derivar(expressao):
+    return lambda x: eval(expressao)
+
+def diferenca_progressiva(f, x, h):
+    return (f(x + h) - f(x)) / h
+
+def diferenca_regressiva(f, x, h):
+    return (f(x) - f(x - h)) / h
+
+def diferenca_centrada(f, x, h):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+expressao = input("Digite f(x): ")
+
+f = funcao_que_deseja_derivar(expressao)
+
+x = float(input("Ponto x onde quer derivar: "))
+h = float(input("Valor de h (quanto menor, mais exata): "))
+
+dp = diferenca_progressiva(f, x, h)
+dr = diferenca_regressiva(f, x, h)
+dc = diferenca_centrada(f, x, h)
+
+print("\n--- Derivadas aproximadas ---")
+print("f(x) =", expressao)
+print("x =", x, "   h =", h)
+print("Progressiva:", dp)
+print("Regressiva: ", dr)
+print("Centrada:   ", dc)
+
+
+resposta = input("\nVocê quer comparar com a derivada exata? (s/n): ").lower()
+
+if resposta == "s":
+    derivada_expr = input("Digite a derivada exata f'(x): ")
+    derivada = funcao_que_deseja_derivar(derivada_expr)
+    exata = derivada(x)
+
+    
+    erro_dp = abs(dp - exata)
+    erro_dr = abs(dr - exata)
+    erro_dc = abs(dc - exata)
+
+    
+    print("\n--- Comparação com derivada exata ---")
+    print(f"Derivada exata em x = {x}:", exata)
+    print("Erro absoluto (progressiva):", erro_dp)
+    print("Erro absoluto (regressiva): ", erro_dr)
+    print("Erro absoluto (centrada):   ", erro_dc)
